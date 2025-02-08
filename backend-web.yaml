@@ -1,0 +1,25 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: backend-web
+  namespace: production
+  labels:
+    app : backend-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: backend-web
+  template:
+    metadata:
+      labels:
+        project: backend-web # Service will look for those PODS Labels!!!
+    spec:
+      containers:
+        - name : backend-web
+          image: dmitrysadovnikov/example:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: RAILS_ENV
+              value: production
